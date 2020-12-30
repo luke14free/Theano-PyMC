@@ -207,6 +207,9 @@ def jax_funcify_MakeSlice(op):
 
 @jax_funcify.register(ScalarOp)
 def jax_funcify_ScalarOp(op):
+    if not hasattr(op, 'nfunc_spec'):
+        return op.impl
+    
     func_name = op.nfunc_spec[0]
 
     if "." in func_name:
